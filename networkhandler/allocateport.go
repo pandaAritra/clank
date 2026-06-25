@@ -6,12 +6,15 @@ import (
 )
 
 func AllocatePort() *net.UDPConn {
-	// 1. Pass ":0" to automatically request a random available port from the OS
-	localAddr, _ := net.ResolveUDPAddr("udp", ":0")
+	localAddr, _ := net.ResolveUDPAddr("udp", ":0") // ":0" to request  port
 	conn, err := net.ListenUDP("udp", localAddr)
 	if err != nil {
 		fmt.Printf("Error binding to an automatic port: %v\n", err)
 		conn.Close()
+		panic("connection failed")
 	}
+	_, allocatedPort, _ := net.SplitHostPort(conn.LocalAddr().String())
+	fmt.Printf("[System] OS assigned local port: %s\n", allocatedPort)
+
 	return conn
 }
