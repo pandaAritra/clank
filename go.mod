@@ -1,4 +1,4 @@
-module p2pchat
+module github.com/pandaAritra/clank
 
 go 1.26.2
 

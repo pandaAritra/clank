@@ -5,17 +5,14 @@ import (
 	"net"
 	"time"
 
+	"github.com/pandaAritra/clank/networkhandler"
+
 	"github.com/pion/stun"
 )
 
 func main() {
-	// 1. Pass ":0" to automatically request a random available port from the OS
-	localAddr, _ := net.ResolveUDPAddr("udp", ":0")
-	conn, err := net.ListenUDP("udp", localAddr)
-	if err != nil {
-		fmt.Printf("Error binding to an automatic port: %v\n", err)
-		return
-	}
+
+	conn := networkhandler.AllocatePort()
 	defer conn.Close()
 
 	// Get the local port that the OS actually assigned to us
